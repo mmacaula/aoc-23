@@ -9,7 +9,7 @@ fun main() {
 
     val day = "Day0x"
     val testInput = readInput("${day}_test")
-    val input = readInput("${day}1")
+    val input = readInput(day)
     part1(input).println()
     part2(input).println()
 }

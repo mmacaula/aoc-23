@@ -1,3 +1,7 @@
+package day06
+
+import readInput
+
 fun main() {
     data class Race(val time: Long, val distance: Long){
         fun calcDistance(timePressed: Long): Long{

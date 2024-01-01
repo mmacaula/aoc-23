@@ -1,3 +1,8 @@
+package day05
+
+import println
+import readInput
+
 fun main() {
     fun parseSeedsPt1(input: String): List<Long> {
         val (_, seeds) = input.split(":")

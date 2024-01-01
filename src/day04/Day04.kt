@@ -1,4 +1,7 @@
-import kotlin.math.log
+package day04
+
+import println
+import readInput
 
 fun main() {
     data class Game(val id: String, val winningNumbers: List<Int>, val numbers: List<Int>)

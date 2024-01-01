@@ -1,3 +1,8 @@
+package day07
+
+import println
+import readInput
+
 enum class Type(val rank: Int) {
     FIVE_KIND(7),
     FOUR_KIND(6),

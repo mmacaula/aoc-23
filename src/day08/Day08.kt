@@ -38,28 +38,47 @@ fun main() {
         return directionIter
     }
 
-    fun allEndsWithZ(startingNodes: List<MapEntry>) = startingNodes.all { it.location.endsWith("Z") }
+    fun findLCM(a: Long, b: Long): Long {
+        val larger = if (a > b) a else b
+        val maxLcm = a * b
+        var lcm = larger
+        while (lcm <= maxLcm) {
+            if (lcm % a == 0.toLong() && lcm % b == 0.toLong()) {
+                return lcm
+            }
+            lcm += larger
+        }
+        return maxLcm
+    }
+    fun findLCMOfListOfNumbers(numbers: List<Long>): Long {
+        var result = numbers[0]
+        for (i in 1 until numbers.size) {
+            result = findLCM(result, numbers[i])
+        }
+        return result
+    }
+
 
     fun part2(input: List<String>): Long {
         val desertMap = parseInput(input)
         val startingNodes = desertMap.entries.filter { it.key.endsWith("A") }.map{it.value}
         println("Starting length ${startingNodes}")
-        var currentLocations = startingNodes.toList()
-        var directionIter = 0L
-        while(! allEndsWithZ(currentLocations)) {
-            val dir = desertMap.directions[(directionIter++ % desertMap.directions.length).toInt()]
-            val direction = Direction.valueOf(dir.toString())
-            currentLocations = currentLocations.map{
-                if(direction == Direction.R){
-                     desertMap.entries[it.right]!!
-                }else desertMap.entries[it.left]!!
-            }
-            if(directionIter % 1_000_000 == 0L){
-                println(directionIter)
-            }
+        var pathLengths = startingNodes.map {start ->
+            var directionIter = 0L
+            var current = start
+            do{
+                val dir = desertMap.directions[(directionIter++ % desertMap.directions.length).toInt()]
+                val direction = Direction.valueOf(dir.toString())
+                current = if(direction == Direction.R){
+                    desertMap.entries[current.right]!!
+                }else desertMap.entries[current.left]!!
+            } while(!current.location.endsWith("Z"))
+            println("path for $start done with at $current for a total of  $directionIter length")
+            directionIter
         }
+        println("Paths $pathLengths")
 
-        return directionIter
+        return findLCMOfListOfNumbers(pathLengths)
     }
 
     val day = "Day08"
@@ -67,6 +86,7 @@ fun main() {
     val input = readInput("${day.lowercase()}/$day")
 //    part1(testInput).println()
 //    part1(input).println()
-//    part2(testInput).println()
+    part2(testInput).println()
+    //14935034899483
     part2(input).println()
 }
